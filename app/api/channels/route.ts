@@ -19,6 +19,12 @@ const KNOWN_CHANNELS: Channel[] = [
     group: 'Live',
   },
   {
+    name: 'Live Stream 3',
+    url: 'http://190.11.225.124:5000/live/fs1_hd/playlist.m3u8',
+    logo: 'https://github.com/SKS-WEBDEV/KickNow26/blob/7d3d7fbd1ca2d578626806ee15b710178536936e/public/live.png',
+    group: 'Live',
+  },
+  {
     name: 'DD Sports SD (1080p)',
     url: 'https://d3qs3d2rkhfqrt.cloudfront.net/out/v1/b17adfe543354fdd8d189b110617cddd/index.m3u8',
     logo: 'https://dtil.tmsimg.com/assets/s158255_ld_h15_aa.png?lock=720x540',
