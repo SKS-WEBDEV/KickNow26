@@ -1,5 +1,4 @@
 import type { Match } from '@/types';
-import { getMatches } from './worldcup-api';
 
 const FALLBACK_MATCHES: Match[] = [
   { id: '1', homeTeam: 'Argentina', awayTeam: 'Brazil', homeFlag: 'https://flagcdn.com/w40/ar.png', awayFlag: 'https://flagcdn.com/w40/br.png', date: '06/14/2026', time: '20:00', status: 'live', homeScore: 2, awayScore: 1 },
@@ -12,8 +11,11 @@ const FALLBACK_MATCHES: Match[] = [
 
 export async function loadMatches(): Promise<{ matches: Match[]; source: string }> {
   try {
-    const matches = await getMatches();
-    return { matches, source: 'api' };
+    const res = await fetch('/api/matches');
+    if (!res.ok) throw new Error('Failed');
+    const data = await res.json();
+    if (data.matches?.length > 0) return { matches: data.matches, source: 'api' };
+    throw new Error('Empty');
   } catch {
     return { matches: FALLBACK_MATCHES, source: 'fallback' };
   }
