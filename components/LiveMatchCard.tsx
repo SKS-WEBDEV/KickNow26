@@ -1,6 +1,7 @@
 'use client';
 
 import type { Match } from '@/types';
+import { toLocalTime } from '@/lib/local-time';
 
 interface Props {
   match: Match;
@@ -23,7 +24,7 @@ export default function LiveMatchCard({ match, onWatch }: Props) {
             <span className="text-red-400 text-xs font-bold uppercase tracking-widest">Live Now</span>
             {match.stage && <span className="text-white/30 text-xs ml-1">{match.stage}</span>}
           </div>
-          <span className="text-white/30 text-xs">{match.timeElapsed || match.time}</span>
+          <span className="text-white/30 text-xs">{match.timeElapsed || toLocalTime(match.date, match.time)}</span>
         </div>
 
         <div className="flex items-center justify-between gap-4 py-4">

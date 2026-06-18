@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import type { Match } from '@/types';
+import { toLocalDate } from '@/lib/local-time';
 
 interface Props {
   matches: Match[];
@@ -30,6 +31,7 @@ export default function PreviousResults({ matches }: Props) {
           <span className="w-1 h-5 bg-amber-400 rounded-full"></span>
           Previous Results
           <span className="text-white/20 text-xs font-normal ml-1">({finished.length})</span>
+          <span className="text-[10px] text-white/15 ml-2 hidden sm:inline">Your timezone</span>
         </h2>
         {finished.length > INITIAL_SHOW && (
           <button
@@ -56,7 +58,7 @@ export default function PreviousResults({ matches }: Props) {
                 {match.stage && (
                   <span className="text-white/20 text-xs uppercase font-medium">{match.stage}</span>
                 )}
-                <span className="text-white/30 text-xs">{match.date}</span>
+                <span className="text-white/30 text-xs">{toLocalDate(match.date, match.time)}</span>
               </div>
 
               <div className="flex items-center gap-2 mb-1.5">

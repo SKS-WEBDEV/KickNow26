@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect, useMemo, useCallback } from 'react';
 import type { Match } from '@/types';
+import { toLocalTime, toLocalDateTime } from '@/lib/local-time';
 
 interface Props {
   matches: Match[];
@@ -131,6 +132,7 @@ export default function TodaySlider({ matches, onWatch, hasLiveMatch }: Props) {
             {todayMatches.length > 0 ? "Today's Games" : 'Next Games'}
           </h2>
           <span className="text-white/20 text-xs font-normal ml-1">({sorted.length})</span>
+          <span className="text-[10px] text-white/15 ml-2 hidden sm:inline">Your timezone</span>
         </div>
         <div className="flex items-center gap-1.5">
           <button
@@ -192,7 +194,7 @@ export default function TodaySlider({ matches, onWatch, hasLiveMatch }: Props) {
                     <span className="text-white/30 text-xs font-medium uppercase tracking-wider">Upcoming</span>
                   )}
                   <span className={`text-xs ${isLive ? 'text-white/40' : 'text-white/20'}`}>
-                    {isLive || isFinished ? match.date : match.time}
+                    {isLive || isFinished ? toLocalDateTime(match.date, match.time) : toLocalTime(match.date, match.time)}
                   </span>
                 </div>
 

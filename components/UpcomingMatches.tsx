@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import type { Match } from '@/types';
+import { toLocalDate, toLocalTime } from '@/lib/local-time';
 
 interface Props {
   matches: Match[];
@@ -24,6 +25,7 @@ export default function UpcomingMatches({ matches }: Props) {
           <span className="w-1 h-5 bg-blue-400 rounded-full"></span>
           Upcoming Matches
           <span className="text-white/20 text-xs font-normal ml-1">({upcoming.length})</span>
+          <span className="text-[10px] text-white/15 ml-2 hidden sm:inline">Your timezone</span>
         </h2>
         {upcoming.length > INITIAL_SHOW && (
           <button
@@ -45,7 +47,7 @@ export default function UpcomingMatches({ matches }: Props) {
               {match.stage && (
                 <span className="text-white/20 text-xs uppercase font-medium">{match.stage}</span>
               )}
-              <span className="text-white/30 text-xs">{match.date}</span>
+              <span className="text-white/30 text-xs">{toLocalDate(match.date, match.time)}</span>
             </div>
             <div className="flex items-center gap-2 mb-2">
               <img src={match.homeFlag} alt={match.homeTeam} className="w-6 h-4 object-contain rounded flex-shrink-0" />
@@ -53,7 +55,7 @@ export default function UpcomingMatches({ matches }: Props) {
             </div>
             <div className="flex items-center justify-center gap-1 my-1">
               <span className="text-white/40 text-[10px] font-bold">VS</span>
-              <span className="text-white/20 text-[10px]">{match.time}</span>
+              <span className="text-white/20 text-[10px]">{toLocalTime(match.date, match.time)}</span>
             </div>
             <div className="flex items-center gap-2">
               <img src={match.awayFlag} alt={match.awayTeam} className="w-6 h-4 object-contain rounded flex-shrink-0" />
