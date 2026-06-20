@@ -79,7 +79,8 @@ export async function GET(request: NextRequest) {
     });
 
     if (!response.ok) {
-      return NextResponse.json({ error: `Stream fetch failed: ${response.status}` }, { status: response.status });
+      const errBody = await response.text().catch(() => '');
+      return NextResponse.json({ error: `Stream fetch failed: ${response.status}`, detail: errBody.slice(0, 500) }, { status: response.status });
     }
 
     const contentType = response.headers.get('content-type') || 'application/octet-stream';
