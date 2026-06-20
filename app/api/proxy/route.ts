@@ -61,7 +61,13 @@ export async function GET(request: NextRequest) {
     const clientCookies = request.headers.get('cookie');
     const referer = request.headers.get('referer') || `${BASE_URL}/`;
 
-    const response = await fetch(targetUrl, {
+    // Route playlist fetches through CF Worker so segment tokens match the
+    // same IP that fetched the playlist (many IPTV servers IP-lock md5 tokens).
+    const fetchUrl = isM3uUrl(decodedUrl) && CLOUDFLARE_WORKER_URL
+      ? `${CLOUDFLARE_WORKER_URL}?url=${encodeURIComponent(targetUrl)}`
+      : targetUrl;
+
+    const response = await fetch(fetchUrl, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
         'Accept': '*/*',
